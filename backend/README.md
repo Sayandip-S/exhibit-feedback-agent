@@ -16,7 +16,7 @@ backend/
 ├── .env                          # API Keys (Do not commit)
 └── requirements.txt              # Python Dependencies
 
-⚙️ Core Logic Explained
+#⚙️ Core Logic Explained
 1. The "Interviewer" State Machine
 The chatbot is not a free-form AI. It enforces a strict flow to ensure data quality:
 
@@ -35,7 +35,7 @@ Keyword Mapping (config.py): Maps fuzzy user terms like "t-shirt" or "flood" to 
 
 Global Knowledge Injection: The system pre-loads one-liner descriptions of every exhibit into the context window. If a user asks "What is this?", the AI references this internal knowledge base to give a factual answer immediately.
 
-🛠️ Setup & Installation
+#🛠️ Setup & Installation
 Prerequisites: Python 3.9+
 
 Navigate to the backend directory:
@@ -65,7 +65,7 @@ OPENAI_MODEL=gpt-4o-mini
 MAX_USER_TURNS=5
 FEEDBACK_LOG_PATH=data/feedback_log.jsonl
 
-🚀 Running the Server
+#🚀 Running the Server
 Start the live server using Uvicorn. The Unity client can connect to this address.
 
 Bash
@@ -76,7 +76,7 @@ Health Check: http://localhost:8000/ should return {"status": "healthy"}.
 
 🔌 API EndpointsMethodEndpointDescriptionGET/startResets the session and generates a random "Hook" question to start the chat.POST/chatThe main logic loop. Accepts user text, updates state, and returns the AI response + current emotion.POST/sttSpeech-to-Text: Accepts a .wav file and returns the transcript using OpenAI Whisper.POST/ttsText-to-Speech: Accepts text and returns streaming audio bytes (MP3) using OpenAI TTS.
 
-📊 Data Logging
+#📊 Data Logging
 All visitor feedback is automatically structured and logged to data/feedback_log.jsonl.
 
 Example Log Entry:
