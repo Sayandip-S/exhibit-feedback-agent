@@ -6,7 +6,6 @@ Unlike standard chatbots, this system uses a **Semi-Structured State Machine** t
 
 ## 📂 Project Structure
 
-```text
 backend/
 ├── data/
 │   ├── exhibit_questions.json    # The "Brain": Definitions & Question packs for all exhibits
@@ -16,15 +15,10 @@ backend/
 ├── .env                          # API Keys (Do not commit)
 └── requirements.txt              # Python Dependencies
 
-<<<<<<< HEAD
 ## ⚙️ Core Logic Explained
 
 ### 1. The "Interviewer" State Machine
 
-=======
-#⚙️ Core Logic Explained
-1. The "Interviewer" State Machine
->>>>>>> e93fac9e6daba498c372be1cff591048b9ef7a0c
 The chatbot is not a free-form AI. It enforces a strict flow to ensure data quality:
 
 #### Phase 1: Identification
@@ -66,7 +60,7 @@ The system pre-loads one-liner descriptions of every exhibit into the context wi
 
 **Example Knowledge Base:**
 
-#🛠️ Setup & Installation
+🛠️ Setup & Installation
 Prerequisites: Python 3.9+
 
 Navigate to the backend directory:
@@ -96,7 +90,7 @@ OPENAI_MODEL=gpt-4o-mini
 MAX_USER_TURNS=5
 FEEDBACK_LOG_PATH=data/feedback_log.jsonl
 
-#🚀 Running the Server
+🚀 Running the Server
 Start the live server using Uvicorn. The Unity client can connect to this address.
 
 Bash
@@ -107,7 +101,7 @@ Health Check: http://localhost:8000/ should return {"status": "healthy"}.
 
 🔌 API EndpointsMethodEndpointDescriptionGET/startResets the session and generates a random "Hook" question to start the chat.POST/chatThe main logic loop. Accepts user text, updates state, and returns the AI response + current emotion.POST/sttSpeech-to-Text: Accepts a .wav file and returns the transcript using OpenAI Whisper.POST/ttsText-to-Speech: Accepts text and returns streaming audio bytes (MP3) using OpenAI TTS.
 
-#📊 Data Logging
+📊 Data Logging
 All visitor feedback is automatically structured and logged to data/feedback_log.jsonl.
 
 Example Log Entry:
@@ -121,7 +115,4 @@ JSON
   "answer": "It made me feel a bit dizzy but the visuals were cool.",
   "ts": "2023-10-27T10:00:00"
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> e93fac9e6daba498c372be1cff591048b9ef7a0c
