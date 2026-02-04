@@ -1,0 +1,486 @@
+{
+  "D4A": {
+    "display_name": "D4A Computer",
+    "one_liner": "The D4A was a revolutionary desktop computer from 1963, known as the 'calculator in a cigar box'.",
+    "questions": [
+      {
+        "id": "d4a_emotion",
+        "text": "Looking at this old computer, does it feel nostalgic, primitive, or impressive to you?",
+        "answer_type": "choice",
+        "choices": ["nostalgic", "primitive", "impressive", "boring"]
+      },
+      {
+        "id": "d4a_reason",
+        "text": "What struck you most about it—its size, the buttons, or its age?",
+        "answer_type": "open"
+      },
+      {
+        "id": "d4a_improve",
+        "text": "What would help you understand its history better?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Asan.AI": {
+    "display_name": "Asan.AI",
+    "one_liner": "Asan.AI lets you play with a neural network in the browser to see how machines learn without complex math.",
+    "questions": [
+      {
+        "id": "asan_emotion",
+        "text": "Did experimenting with the AI model feel empowering, confusing, or too simple?",
+        "answer_type": "choice",
+        "choices": ["empowering", "confusing", "too simple", "fun"]
+      },
+      {
+        "id": "asan_reason",
+        "text": "What part was most clear—the visuals, the controls, or the results?",
+        "answer_type": "open"
+      },
+      {
+        "id": "asan_improve",
+        "text": "If you could change one thing about this interface, what would it be?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Swarming bacteria": {
+    "display_name": "Swarming Bacteria",
+    "one_liner": "This simulation shows how bacteria move collectively in 'active liquids' to flow better.",
+    "questions": [
+      {
+        "id": "swarm_emotion",
+        "text": "Watching the bacteria swarm, did it feel mesmerizing, gross, or just scientific?",
+        "answer_type": "choice",
+        "choices": ["mesmerizing", "gross", "scientific", "boring"]
+      },
+      {
+        "id": "swarm_reason",
+        "text": "What caught your eye—the patterns, the speed, or the chaos?",
+        "answer_type": "open"
+      },
+      {
+        "id": "swarm_improve",
+        "text": "What would make this simulation more engaging for you?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Chatbot": {
+    "display_name": "Chatbot",
+    "one_liner": "This exhibit questions whether AI is truly 'smart' or just predicting the next word based on patterns.",
+    "questions": [
+      {
+        "id": "chat_emotion",
+        "text": "Did the AI's answers feel smart, robotic, or surprisingly human?",
+        "answer_type": "choice",
+        "choices": ["smart", "robotic", "human", "creepy"]
+      },
+      {
+        "id": "chat_reason",
+        "text": "What gave it away—the voice, the phrasing, or the logic?",
+        "answer_type": "open"
+      },
+      {
+        "id": "chat_improve",
+        "text": "What would make talking to this bot feel more natural?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Circuit Flowfields": {
+    "display_name": "Circuit Flowfields",
+    "one_liner": "This artwork visualizes the massive speed and colored data processes running through Dresden's supercomputers.",
+    "questions": [
+      {
+        "id": "circuit_emotion",
+        "text": "Did the data visualization feel chaotic, beautiful, or overwhelming?",
+        "answer_type": "choice",
+        "choices": ["chaotic", "beautiful", "overwhelming", "calm"]
+      },
+      {
+        "id": "circuit_reason",
+        "text": "Was it the colors, the speed, or the scale that made you feel that way?",
+        "answer_type": "open"
+      },
+      {
+        "id": "circuit_improve",
+        "text": "What would help you understand the data behind the art better?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Complex calculations": {
+    "display_name": "Complex Calculations",
+    "one_liner": "This exhibit simulates biological processes to show how cells and tissues maintain their shape.",
+    "questions": [
+      {
+        "id": "complex_emotion",
+        "text": "Did these biological simulations seem abstract or clear to you?",
+        "answer_type": "choice",
+        "choices": ["abstract", "clear", "fascinating", "dull"]
+      },
+      {
+        "id": "complex_reason",
+        "text": "What part was hardest to grasp—the shapes, the movement, or the explanation?",
+        "answer_type": "open"
+      },
+      {
+        "id": "complex_improve",
+        "text": "How could we explain the math behind this biology better?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Complexity Explorables": {
+    "display_name": "Complexity Explorables",
+    "one_liner": "These interactive models let you control swarm behavior and patterns using simple sliders.",
+    "questions": [
+      {
+        "id": "explorables_emotion",
+        "text": "Did playing with the parameters feel powerful, confusing, or fun?",
+        "answer_type": "choice",
+        "choices": ["powerful", "confusing", "fun", "boring"]
+      },
+      {
+        "id": "explorables_reason",
+        "text": "Which control or slider had the most surprising effect?",
+        "answer_type": "open"
+      },
+      {
+        "id": "explorables_improve",
+        "text": "What other system or pattern would you like to control here?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Data traces": {
+    "display_name": "Data Traces",
+    "one_liner": "Data Traces uses LiDAR to track your path through the exhibition and build a profile of your interests.",
+    "questions": [
+      {
+        "id": "datatraces_emotion",
+        "text": "Seeing your own movement profile, did you feel exposed, impressed, or indifferent?",
+        "answer_type": "choice",
+        "choices": ["exposed", "impressed", "indifferent", "curious"]
+      },
+      {
+        "id": "datatraces_reason",
+        "text": "Was the profile accurate about what you liked?",
+        "answer_type": "open"
+      },
+      {
+        "id": "datatraces_improve",
+        "text": "What would make this tracking data easier to understand?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Dresden mapping": {
+    "display_name": "Dresden Mapping",
+    "one_liner": "This digital twin of Dresden simulates flood events and urban infrastructure planning.",
+    "questions": [
+      {
+        "id": "mapping_emotion",
+        "text": "Did seeing the flood simulation feel alarming, informative, or distant?",
+        "answer_type": "choice",
+        "choices": ["alarming", "informative", "distant", "cool"]
+      },
+      {
+        "id": "mapping_reason",
+        "text": "Did you recognize specific places, or was it the water flow that stood out?",
+        "answer_type": "open"
+      },
+      {
+        "id": "mapping_improve",
+        "text": "What other city scenario would you like to see simulated?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Faces": {
+    "display_name": "Faces",
+    "one_liner": "Faces explores how facial data can be detected, tracked, and interpreted by systems.",
+    "questions": [
+      {
+        "id": "faces_emotion",
+        "text": "Did Faces feel more playful or unsettling to you?",
+        "answer_type": "choice",
+        "choices": ["playful", "unsettling", "both", "not sure"]
+      },
+      {
+        "id": "faces_reason",
+        "text": "What detail triggered that feeling—movement, eyes, tracking, or something else?",
+        "answer_type": "open"
+      },
+      {
+        "id": "faces_improve",
+        "text": "What would make the message of Faces clearer or more comfortable?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Film Forms": {
+    "display_name": "Film Forms",
+    "one_liner": "Film Forms transforms iconic movie scripts into 3D sculptures using sentiment analysis data.",
+    "questions": [
+      {
+        "id": "film_emotion",
+        "text": "Did the shape of the movie scripts feel abstract, beautiful, or confusing?",
+        "answer_type": "choice",
+        "choices": ["abstract", "beautiful", "confusing", "intriguing"]
+      },
+      {
+        "id": "film_reason",
+        "text": "Could you see the connection between the movie story and the shape?",
+        "answer_type": "open"
+      },
+      {
+        "id": "film_improve",
+        "text": "What other movie would you like to see turned into a shape?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Hyperuniformity": {
+    "display_name": "Hyperuniformity",
+    "one_liner": "Hyperuniformity is a state of matter between crystal order and liquid disorder.",
+    "questions": [
+      {
+        "id": "hyper_emotion",
+        "text": "Did the patterns look orderly, random, or somewhere in between?",
+        "answer_type": "choice",
+        "choices": ["orderly", "random", "mixed", "confusing"]
+      },
+      {
+        "id": "hyper_reason",
+        "text": "What did the visual pattern remind you of in the real world?",
+        "answer_type": "open"
+      },
+      {
+        "id": "hyper_improve",
+        "text": "How could we explain this complex physics concept better?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Magic Mirror": {
+    "display_name": "Magic Mirror",
+    "one_liner": "The Magic Mirror uses deep learning to let you virtually try on clothes by describing them.",
+    "questions": [
+      {
+        "id": "mirror_emotion",
+        "text": "Was the virtual try-on fun, awkward, or futuristic?",
+        "answer_type": "choice",
+        "choices": ["fun", "awkward", "futuristic", "slow"]
+      },
+      {
+        "id": "mirror_reason",
+        "text": "Did the clothes match what you described, or was the AI confused?",
+        "answer_type": "open"
+      },
+      {
+        "id": "mirror_improve",
+        "text": "What would make the mirror feel more like a real changing room?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Mathematical models": {
+    "display_name": "Mathematical Models",
+    "one_liner": "These historical models represent complex equations and functions as physical objects.",
+    "questions": [
+      {
+        "id": "math_emotion",
+        "text": "Do these physical models make math feel more accessible or still dry?",
+        "answer_type": "choice",
+        "choices": ["accessible", "dry", "beautiful", "old"]
+      },
+      {
+        "id": "math_reason",
+        "text": "Does seeing the equation as a shape help you understand it?",
+        "answer_type": "open"
+      },
+      {
+        "id": "math_improve",
+        "text": "How could we bring these static models to life?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Retro Reboot": {
+    "display_name": "Retro Reboot",
+    "one_liner": "Retro Reboot lets you punch code onto tape strips to make music or graphics, just like early computers.",
+    "questions": [
+      {
+        "id": "retro_emotion",
+        "text": "Did punching the code feel like hard work, fun, or creative?",
+        "answer_type": "choice",
+        "choices": ["hard work", "fun", "creative", "tedious"]
+      },
+      {
+        "id": "retro_reason",
+        "text": "Did you enjoy the physical feeling of 'programming' by hand?",
+        "answer_type": "open"
+      },
+      {
+        "id": "retro_improve",
+        "text": "What would make the result of your punched tape clearer?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Sandbox": {
+    "display_name": "Sandbox",
+    "one_liner": "Sandbox lets visitors explore data ideas through hands-on interaction with sand.",
+    "questions": [
+      {
+        "id": "sbx_emotion",
+        "text": "Quick check: how did the Sandbox feel overall—curious, playful, confusing, or unsettling?",
+        "answer_type": "choice",
+        "choices": ["curious", "playful", "confusing", "unsettling", "not sure"]
+      },
+      {
+        "id": "sbx_reason",
+        "text": "What exactly caused that feeling—was it the touch, the visuals, or the explanation?",
+        "answer_type": "open"
+      },
+      {
+        "id": "sbx_improve",
+        "text": "If you could change one thing in Sandbox to improve it, what would it be?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Seamless pattern": {
+    "display_name": "Seamless Pattern",
+    "one_liner": "This T-shirt design uses math to ensure the pattern continues perfectly across the seams.",
+    "questions": [
+      {
+        "id": "seamless_emotion",
+        "text": "Is the seamless design something you noticed immediately, or did it feel subtle?",
+        "answer_type": "choice",
+        "choices": ["noticed it", "subtle", "didn't see it", "cool"]
+      },
+      {
+        "id": "seamless_reason",
+        "text": "Does knowing the math behind the T-shirt make it more interesting?",
+        "answer_type": "open"
+      },
+      {
+        "id": "seamless_improve",
+        "text": "What other object would you like to see with this seamless math?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Server cabinet": {
+    "display_name": "Server Cabinet",
+    "one_liner": "The Server Cabinet shows the loud, hot physical reality of where data lives.",
+    "questions": [
+      {
+        "id": "server_emotion",
+        "text": "Did the server cabinet feel loud, impressive, or boring?",
+        "answer_type": "choice",
+        "choices": ["loud", "impressive", "boring", "intense"]
+      },
+      {
+        "id": "server_reason",
+        "text": "What surprised you most—the noise, the heat, or the lights?",
+        "answer_type": "open"
+      },
+      {
+        "id": "server_improve",
+        "text": "What would help you understand what these machines are actually doing?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Server kit": {
+    "display_name": "Server Kit",
+    "one_liner": "Server Kit lets you use blocks to physically build and configure a high-performance server.",
+    "questions": [
+      {
+        "id": "kit_emotion",
+        "text": "Did building the server with blocks feel like a puzzle, a lesson, or a game?",
+        "answer_type": "choice",
+        "choices": ["puzzle", "lesson", "game", "confusing"]
+      },
+      {
+        "id": "kit_reason",
+        "text": "Did you understand what each block represented?",
+        "answer_type": "open"
+      },
+      {
+        "id": "kit_improve",
+        "text": "What would make the connection to real computer hardware clearer?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Time travel": {
+    "display_name": "Time Travel",
+    "one_liner": "Time Travel explores the history of computer science in Dresden from the 1940s to the 1960s.",
+    "questions": [
+      {
+        "id": "time_emotion",
+        "text": "Did the local history of computers feel relevant, surprising, or a bit dry?",
+        "answer_type": "choice",
+        "choices": ["relevant", "surprising", "dry", "inspiring"]
+      },
+      {
+        "id": "time_reason",
+        "text": "Which decade or machine was the most interesting to read about?",
+        "answer_type": "open"
+      },
+      {
+        "id": "time_improve",
+        "text": "How could we make this history feel more alive?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "Traces": {
+    "display_name": "Traces",
+    "one_liner": "Traces visualizes where visitors have been in the exhibition using LiDAR scans.",
+    "questions": [
+      {
+        "id": "traces_emotion",
+        "text": "Seeing the visitor paths, did you feel part of a swarm or observed?",
+        "answer_type": "choice",
+        "choices": ["swarm", "observed", "interested", "neutral"]
+      },
+      {
+        "id": "traces_reason",
+        "text": "Could you identify your own movement in the visualization?",
+        "answer_type": "open"
+      },
+      {
+        "id": "traces_improve",
+        "text": "What other data about the visitors would be interesting to see?",
+        "answer_type": "open"
+      }
+    ]
+  },
+  "VR experience": {
+    "display_name": "VR Experience",
+    "one_liner": "The VR experience immerses you in a data-driven environment to explore patterns and perception.",
+    "questions": [
+      {
+        "id": "vr_comfort",
+        "text": "How comfortable was the VR experience—great, okay, or dizzy?",
+        "answer_type": "choice",
+        "choices": ["great", "okay", "dizzy", "not sure"]
+      },
+      {
+        "id": "vr_reason",
+        "text": "What part stood out most—visuals, motion, story, or interaction?",
+        "answer_type": "open"
+      },
+      {
+        "id": "vr_improve",
+        "text": "One improvement for VR—what would make it better?",
+        "answer_type": "open"
+      }
+    ]
+  }
+}
