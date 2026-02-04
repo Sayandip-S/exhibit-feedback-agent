@@ -16,24 +16,50 @@ backend/
 ├── .env                          # API Keys (Do not commit)
 └── requirements.txt              # Python Dependencies
 
-⚙️ Core Logic Explained
-1. The "Interviewer" State Machine
+## ⚙️ Core Logic Explained
+
+### 1. The "Interviewer" State Machine
+
 The chatbot is not a free-form AI. It enforces a strict flow to ensure data quality:
 
-Phase 1: Identification: The bot listens for keywords (e.g., "sand", "bacteria", "VR") using the smart mapping in config.py to identify the specific exhibit.
+#### Phase 1: Identification
+The bot listens for keywords (e.g., "sand", "bacteria", "VR") using the smart mapping in `config.py` to identify the specific exhibit.
 
-Phase 2: The Interview: Once an exhibit is locked, it pulls a specific "Question Pack" from exhibit_questions.json (Emotion, Reason, Improvement).
+#### Phase 2: The Interview
+Once an exhibit is locked, it pulls a specific "Question Pack" from `exhibit_questions.json` with three question types:
+- **Emotion**: How does this exhibit make you feel?
+- **Reason**: What aspects contribute to this feeling?
+- **Improvement**: How could this experience be enhanced?
 
-Phase 3: The Unified Prompt: We use a dynamic System Prompt that injects the current goal ("You MUST ask about safety") while providing a "Knowledge Base" of the museum so the AI can answer factual questions before pivoting back to the interview.
+#### Phase 3: The Unified Prompt
+We use a dynamic System Prompt that:
+- Injects the current interview goal (e.g., "You MUST ask about safety")
+- Provides a "Knowledge Base" of museum exhibits so the AI can answer factual questions
+- Maintains conversational flow while gently guiding back to the interview structure
 
-Phase 4: Closing: After a set number of turns (default: 5), the bot summarizes the user's feedback and politely ends the session.
+#### Phase 4: Closing
+After a set number of turns (default: 5), the bot:
+- Summarizes the user's feedback
+- Thanks the visitor for their input
+- Politely ends the session
 
-2. Smart Context Mapping
+---
+
+### 2. Smart Context Mapping
+
 The system solves the "Context Blindness" problem of LLMs using two layers:
 
-Keyword Mapping (config.py): Maps fuzzy user terms like "t-shirt" or "flood" to official IDs like Seamless pattern or Dresden mapping.
+#### Keyword Mapping (`config.py`)
+Maps fuzzy user terms to official exhibit IDs:
+- "t-shirt" → "Seamless pattern"
+- "flood" → "Dresden mapping"
+- "sand" → "Flood protection system"
+- "bacteria" → "Microbial fuel cell"
 
-Global Knowledge Injection: The system pre-loads one-liner descriptions of every exhibit into the context window. If a user asks "What is this?", the AI references this internal knowledge base to give a factual answer immediately.
+#### Global Knowledge Injection
+The system pre-loads one-liner descriptions of every exhibit into the context window:
+
+**Example Knowledge Base:**
 
 🛠️ Setup & Installation
 Prerequisites: Python 3.9+
@@ -90,3 +116,4 @@ JSON
   "answer": "It made me feel a bit dizzy but the visuals were cool.",
   "ts": "2023-10-27T10:00:00"
 }
+
