@@ -86,7 +86,8 @@ def build_unified_system_prompt(
     target_question: str, 
     current_exhibit: str, 
     one_liner: str, 
-    is_closing: bool = False
+    is_closing: bool = False,
+    transition_note: Optional[str] = None  # <--- NEW ARGUMENT
 ) -> str:
     
     # 1. Base Persona
@@ -135,6 +136,12 @@ User: "What is Faces?"
 You: "Faces uses LiDAR sensors to track your eyes. Did seeing that feel playful or creepy?" 
 (Notice how you answered, then immediately pivoted to the feedback question).
 """
+    
+    # === NEW: Inject the Transition Instruction ===
+    if transition_note:
+        prompt += f"\n**SPECIAL TRANSITION:** {transition_note}\n"
+    # ==============================================
+
     return prompt
 
 def call_llm(system_prompt: str, history: List[Dict[str, str]]) -> str:
@@ -295,6 +302,7 @@ async def start_endpoint(session_id: str):
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     s = _get_session(request.session_id)
+    transition_note = None
     user_text = request.user_text
 
     # 1. Update History
@@ -311,6 +319,61 @@ async def chat_endpoint(request: ChatRequest):
         
     # 3. Detect Switch
     detected = detect_exhibit_from_text(user_text)
+    # === NEW: LLM Fallback Detection (The Fix) ===
+    # If Python missed the keyword, let's ask the LLM to verify if an exhibit was mentioned.
+    if not detected and not s["selected_exhibit"]:
+        # Quick prompt to classify the user's intent
+        classification_prompt = f"""
+        You are a classifier. 
+        User text: "{user_text}"
+        
+        Task: Does this text refer to one of these exhibits?
+        Exhibits: {", ".join(EXHIBITS)}
+        
+        Output: Return ONLY the exact exhibit name. If unsure or no match, return "None".
+        """
+        # We reuse your existing call_llm function for consistency
+        suspected = call_llm(classification_prompt, [])
+        
+        # Clean up response (remove punctuation/spaces)
+        suspected = suspected.strip().strip(".\"")
+        
+        if suspected in EXHIBITS:
+            detected = suspected
+            logger.info(f"LLM Fallback detected exhibit: {detected}")
+    # ===============================================
+    # B. NEW: Intent Validation (The Fix for your issue)
+    # If we have a current exhibit AND the detected one is different, check INTENT.
+    current_ex = s.get("selected_exhibit")
+    
+    if current_ex and detected and detected != current_ex:
+        # Ask LLM if this is a real switch
+        validation_prompt = f"""
+        Context: The user is currently discussing '{current_ex}'.
+        User Input: "{request.user_text}"
+        Detected Keyword: Refers to '{detected}'.
+        Task: Determine if the user wants to SWITCH to '{detected}' or STAY on '{current_ex}' (referencing comparison).
+        Output: Return exactly "SWITCH" or "STAY".
+        """
+        decision = call_llm(validation_prompt, [])  # Pass empty history for speed
+        logger.info(f"Switch Validation: {decision}")
+        
+        if "stay" in decision.lower():
+            # CASE: STAY
+            # We ignore the new keyword, BUT we tell the LLM to acknowledge the choice.
+            detected = current_ex 
+            transition_note = (
+                f"The user mentioned '{request.user_text}' but we are sticking to '{current_ex}'. "
+                "Start your reply with: 'Okay, let's stick to this exhibit for now...'"
+            )
+        else:
+            # CASE: SWITCH
+            # We allow the switch, and tell the LLM to acknowledge it.
+            transition_note = (
+                f"The user explicitly switched from '{current_ex}' to '{detected}'. "
+                f"Start your reply with: 'Okay, we can switch to the {detected}...'"
+            )
+
     if detected:
         if detected != s["selected_exhibit"]:
             s["selected_exhibit"] = detected
@@ -336,7 +399,8 @@ async def chat_endpoint(request: ChatRequest):
         target_question=plan["text"],
         current_exhibit=s.get("selected_exhibit"),
         one_liner=plan["one_liner"],
-        is_closing=False
+        is_closing=False,
+        transition_note=transition_note
     )
     
     reply = call_llm(system_prompt, s["messages"])

@@ -94,7 +94,7 @@ FEEDBACK_LOG_PATH=data/feedback_log.jsonl
 Start the live server using Uvicorn. The Unity client can connect to this address.
 
 Bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+uvicorn main:app --reload
 Local Swagger UI: Visit http://localhost:8000/docs to test endpoints manually.
 
 Health Check: http://localhost:8000/ should return {"status": "healthy"}.
