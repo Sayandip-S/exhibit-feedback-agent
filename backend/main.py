@@ -168,14 +168,15 @@ def _get_session(session_id: str) -> Dict[str, Any]:
             "selected_exhibit": None,
             "asked_qids": set(),
             "last_qid": None,
-            "turn_count": 0
+            "turn_count": 0,
+            "selection_attempts": 0  # <--- NEW: Initialize counter
         }
     return SESSION_STORE[session_id]
 
 def _append_message(session_id: str, role: str, content: str):
     s = _get_session(session_id)
-    # Memory Window: Keep last 6 messages
-    if len(s["messages"]) >= 6:
+    # Memory Window: Keep last 10 messages
+    if len(s["messages"]) >= 10:
         s["messages"].pop(0)
     s["messages"].append({"role": role, "content": content})
 
@@ -198,12 +199,49 @@ def get_next_question_logic(session: Dict[str, Any]) -> Dict[str, Any]:
     
     # CASE 1: No exhibit selected
     if not exhibit:
-        return {
-            "id": "select_exhibit",
-            "text": "Which specific exhibit would you like to discuss? (e.g. Faces, VR, Sandbox)",
-            "one_liner": "I know about all the exhibits here.",
-            "end_conversation": False
-        }
+        # === EXCEPTION: User explicitly asked to choose manually ===
+        if session.get("force_open_choice"):
+            session["force_open_choice"] = False  # Reset flag immediately (one-time use)
+            # We do NOT increment "selection_attempts" because this is a valid request.
+            return {
+                "id": "select_exhibit_explicit",
+                "text": "Understood. Which specific exhibit would you like to discuss? (e.g. Faces, VR, Sandbox)",
+                "one_liner": "The user wants to select an exhibit manually.",
+                "end_conversation": False
+            }
+        # ===========================================================
+
+        # Standard Failure Logic (The Counter)
+        session["selection_attempts"] = session.get("selection_attempts", 0) + 1
+        attempts = session["selection_attempts"]
+
+        # Attempts 1 & 2: Push the LiDAR Suggestions
+        if attempts <= 2:
+            suggestions = get_lidar_suggestions() 
+            return {
+                "id": "select_exhibit_lidar",
+                "text": f"Hey, I noticed you spent the most time at the {suggestions}. Would you like to review one of them?",
+                "one_liner": "I have access to visitor tracking data to see where you spent your time.",
+                "end_conversation": False
+            }
+        
+        # Attempt 3: Generic "Last Chance"
+        elif attempts == 3:
+            return {
+                "id": "select_exhibit_generic",
+                "text": "It seems I'm having trouble matching that to an exhibit. Would you like to give a review for ANY exhibit? If so, just say the name.",
+                "one_liner": "I am trying to help the user start a review.",
+                "end_conversation": False
+            }
+            
+        # Attempt 4: Polite Exit (Graceful Failure)
+        else:
+             return {
+                "id": "force_end",
+                "text": "It looks like you might be done for now. Thank you for visiting Data Spaces!",
+                "one_liner": "The user is not engaging. End the conversation politely.",
+                "end_conversation": True
+            }
 
     # CASE 2: Overall
     if exhibit == "overall exhibition":
@@ -247,6 +285,22 @@ def get_next_question_logic(session: Dict[str, Any]) -> Dict[str, Any]:
         "end_conversation": False
     }
 
+def get_lidar_suggestions() -> str:
+    """
+    Simulates fetching the 'Top 3 Visited Exhibits' from the LiDAR backend.
+    """
+    # 1. Try to read from a real file (Future Proofing)
+    lidar_path = "data/lidar_stats.json" 
+    if os.path.exists(lidar_path):
+        try:
+            with open(lidar_path, "r") as f:
+                data = json.load(f)
+                # Assuming JSON is like: ["Faces", "Sandbox", "VR"]
+                if data and len(data) >= 3:
+                    return ", ".join(data[:3])
+        except Exception as e:
+            logger.error(f"Failed to read LiDAR file: {e}")
+
 # ============ MODELS ============
 class ChatRequest(BaseModel):
     session_id: str
@@ -288,15 +342,29 @@ async def root():
 
 @app.get("/start", response_model=StartResponse)
 async def start_endpoint(session_id: str):
+    # Reset session logic
     if session_id in SESSION_STORE:
         del SESSION_STORE[session_id]
     
-    starters = [
-        "Hi! I'm the exhibition feedback bot. What stood out to you most today?",
-        "Hello. I'm collecting thoughts on Data Spaces. What was your favorite part?"
+    # 1. Short, engaging hooks (Randomized)
+    hooks = [
+        "Your feedback helps shape the future of this exhibition.",
+        "We use your thoughts to help researchers understand visitor experiences.",
+        "I'm collecting data to help developers improve their exhibit.",
+        "Your perspective helps us bridge the gap between data and people.",
+        "I am the digital memory of this space, learning from every visitor.",
+        "Your honest critique helps us make Data Spaces better for everyone."
     ]
-    reply = random.choice(starters)
+    
+    # 2. Standard Instruction (Constant)
+    instruction = "Tap the button below and just say 'Yes' to begin."
+    
+    # 3. Combine them
+    reply = f"{random.choice(hooks)} {instruction}"
+    
+    # Save to history so the bot knows it started the convo
     _append_message(session_id, "assistant", reply)
+    
     return StartResponse(reply_text=reply)
 
 @app.post("/chat", response_model=ChatResponse)
@@ -342,6 +410,17 @@ async def chat_endpoint(request: ChatRequest):
             detected = suspected
             logger.info(f"LLM Fallback detected exhibit: {detected}")
     # ===============================================
+
+    # === NEW: Detect "Navigation Intent" (The Exception) ===
+    # If no exhibit is found, check if the user is explicitly asking to switch/choose.
+    if not detected:
+        # Keywords that imply "I want to choose something else"
+        nav_keywords = ["another", "other", "different", "something else", "review one", "switch"]
+        if any(k in user_text.lower() for k in nav_keywords):
+            s["force_open_choice"] = True
+            logger.info("User explicitly asked to choose an exhibit.")
+    # =======================================================
+
     # B. NEW: Intent Validation (The Fix for your issue)
     # If we have a current exhibit AND the detected one is different, check INTENT.
     current_ex = s.get("selected_exhibit")
@@ -377,6 +456,7 @@ async def chat_endpoint(request: ChatRequest):
     if detected:
         if detected != s["selected_exhibit"]:
             s["selected_exhibit"] = detected
+            s["selection_attempts"] = 0  # <--- NEW: Reset counter if they pick one!
             log_feedback_event({"session_id": request.session_id, "type": "select", "exhibit": detected})
     elif "overall" in user_text.lower():
         s["selected_exhibit"] = "overall exhibition"
@@ -394,6 +474,14 @@ async def chat_endpoint(request: ChatRequest):
     # 5. Get Next Question Logic
     plan = get_next_question_logic(s)
     
+    # === NEW: Check for Forced Exit Logic ===
+    if plan.get("end_conversation"):
+        prompt = build_unified_system_prompt("", None, None, is_closing=True)
+        reply = call_llm(prompt, s["messages"])
+        _append_message(request.session_id, "assistant", reply)
+        return ChatResponse(reply_text=reply)
+    # ========================================
+
     # 6. Generate Response
     system_prompt = build_unified_system_prompt(
         target_question=plan["text"],

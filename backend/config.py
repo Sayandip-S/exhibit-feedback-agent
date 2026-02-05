@@ -73,7 +73,7 @@ KEYWORD_MAPPING = {
     "hyperuniformity": "Hyperuniformity",
     "crystal": "Hyperuniformity",
     "disorder": "Hyperuniformity",
-    "order": "Hyperuniformity",
+    #"order": "Hyperuniformity",
 
     # 13. Magic Mirror
     "mirror": "Magic Mirror",

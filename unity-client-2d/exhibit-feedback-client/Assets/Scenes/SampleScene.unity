@@ -1220,7 +1220,7 @@ MonoBehaviour:
   botReplyField: {fileID: 1961964423}
   stateLabel: {fileID: 1726736187}
   backendBaseUrl: http://127.0.0.1:8000
-  idleResetSeconds: 30
+  idleResetSeconds: 45
   ttsAudioSource: {fileID: 817711476}
 --- !u!4 &817711475
 Transform:
